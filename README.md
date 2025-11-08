@@ -27,12 +27,7 @@ A modern, responsive AI-powered chatbot application built with React frontend an
 
 - **Real-time Chat Interface**: Modern, responsive UI with smooth animations
 - **AI-Powered Responses**: Integrated with Google Gemini AI for intelligent, well-formatted conversations
-- **Smart Formatting**: Automatic formatting of lists, paragraphs, and structured responses
-- **Rich Text Display**: Support for headings, bold/italic text, code blocks, bullet points, numbered lists, and visual diagrams
 - **Code Explanation**: Clean formatting for technical code explanations with syntax highlighting
-- **Enhanced UX**: Clean, organized message display with proper spacing and styling
-- **Loading States**: Visual feedback during AI response generation
-- **Clean Architecture**: Well-structured codebase with separation of concerns
 
 ## 🛠 Technology Stack
 
