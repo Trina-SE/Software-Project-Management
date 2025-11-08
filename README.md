@@ -26,7 +26,11 @@ A modern, responsive AI-powered chatbot application built with React frontend an
 ## ✨ Features
 
 - **Real-time Chat Interface**: Modern, responsive UI with smooth animations
-- **AI-Powered Responses**: Integrated with Hugging Face models via OpenAI API
+- **AI-Powered Responses**: Integrated with Google Gemini AI for intelligent, well-formatted conversations
+- **Smart Formatting**: Automatic formatting of lists, paragraphs, and structured responses
+- **Rich Text Display**: Support for headings, bold/italic text, code blocks, bullet points, numbered lists, and visual diagrams
+- **Code Explanation**: Clean formatting for technical code explanations with syntax highlighting
+- **Enhanced UX**: Clean, organized message display with proper spacing and styling
 - **Loading States**: Visual feedback during AI response generation
 - **Clean Architecture**: Well-structured codebase with separation of concerns
 
@@ -40,8 +44,8 @@ A modern, responsive AI-powered chatbot application built with React frontend an
 
 ### Backend
 - **FastAPI** - Modern, fast web framework for building APIs
-- **OpenAI Python Client** - For AI model integration
-- **Hugging Face Router** - Access to various AI models
+- **Google Gemini AI** - Google's latest AI model (Gemini 1.5 Flash) for natural language processing
+- **python-dotenv** - Environment variable management
 - **CORS Middleware** - Cross-origin resource sharing support
 
 ### Development Tools
@@ -62,8 +66,8 @@ Before running this project, ensure you have the following installed:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/llm-chatbot.git
-cd llm-chatbot
+git clone https://github.com/MdMostafizurRahaman/Software-Project-Management.git
+cd Chatbot
 ```
 
 ### 2. Backend Setup
@@ -71,10 +75,10 @@ cd llm-chatbot
 cd Backend
 
 # Install Python dependencies
-pip install fastapi uvicorn openai python-dotenv
+pip install fastapi uvicorn google-generativeai python-dotenv
 
-# Create .env file with your API key
-echo "HF_API_KEY=your_hugging_face_api_key_here" > .env
+# Create .env file with your Gemini API key
+echo "GEMINI_API_KEY=your_gemini_api_key_here" > .env
 ```
 
 ### 3. Frontend Setup
