@@ -19,16 +19,18 @@ A modern, responsive AI-powered chatbot application built with React frontend an
 - [Usage](#usage)
 - [Project Structure](#project-structure)
 - [API Documentation](#api-documentation)
-- [Screenshots](#screenshots)
+- [Screenshots](#screenshots-of-chatbot)
 - [Contributing](#contributing)
 - [License](#license)
 
+<a id="features"></a>
 ## ✨ Features
 
 - **Real-time Chat Interface**: Modern, responsive UI with smooth animations
 - **AI-Powered Responses**: Integrated with Google Gemini AI for intelligent, well-formatted conversations
 - **Code Explanation**: Clean formatting for technical code explanations with syntax highlighting
 
+<a id="technology-stack"></a>
 ## 🛠 Technology Stack
 
 ### Frontend
@@ -48,6 +50,7 @@ A modern, responsive AI-powered chatbot application built with React frontend an
 - **Python 3.13** - Programming language for backend
 - **Git** - Version control system
 
+<a id="prerequisites"></a>
 ## 📋 Prerequisites
 
 Before running this project, ensure you have the following installed:
@@ -57,6 +60,7 @@ Before running this project, ensure you have the following installed:
 - **Git**
 - **Gemini Api key** (for AI functionality)
 
+<a id="installation"></a>
 ## 🚀 Installation
 
 ### 1. Clone the Repository
@@ -87,6 +91,7 @@ npm install
 echo "REACT_APP_BACKEND_URL=http://localhost:8000" > .env
 ```
 
+<a id="usage"></a>
 ## 🎯 Usage
 
 ### Running the Application
@@ -115,6 +120,7 @@ echo "REACT_APP_BACKEND_URL=http://localhost:8000" > .env
 3. Wait for the AI response
 4. Continue the conversation!
 
+<a id="project-structure"></a>
 ## 📁 Project Structure
 
 ```
@@ -142,6 +148,7 @@ ChatBot/
 └── README.md                # Project documentation
 ```
 
+<a id="api-documentation"></a>
 ## 📚 API Documentation
 
 ### Backend Endpoints
@@ -179,10 +186,12 @@ Sends a message to the AI and receives a response.
   "response": "Error: [error message]"
 }
 ```
-
+<a id="screenshots-of-chatbot"></a>
+## Screenshots of Chatbot
 <img src="./Screenshort/image%20copy.png" width="300" alt="Screenshot 1"/> <img src="./Screenshort/image.png" width="300" alt="Screenshot 2"/>
 
 
+<a id="contributing"></a>
 ## 🤝 Contributing
 
 1. Fork the repository
@@ -191,6 +200,7 @@ Sends a message to the AI and receives a response.
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
+<a id="license"></a>
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
