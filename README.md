@@ -182,17 +182,6 @@ Sends a message to the AI and receives a response.
 ```
 
 
-## 🔮 Future Enhancements
-
-- [ ] **User Authentication**: Login/signup system
-- [ ] **Chat History Persistence**: Save conversations to database
-- [ ] **Multiple AI Models**: Support for different AI providers
-- [ ] **Voice Input/Output**: Speech-to-text and text-to-speech
-- [ ] **File Upload**: Support for image/document analysis
-- [ ] **Multi-language Support**: Internationalization
-- [ ] **Dark Mode**: Theme switching capability
-- [ ] **Real-time Collaboration**: Multiple users in same chat
-- [ ] **Analytics Dashboard**: Usage statistics and insights
 
 ## 🤝 Contributing
 
