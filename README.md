@@ -55,7 +55,7 @@ Before running this project, ensure you have the following installed:
 - **Node.js** (v16 or higher)
 - **Python** (v3.8 or higher)
 - **Git**
-- **Hugging Face API Key** (for AI functionality)
+- **Gemini Api key** (for AI functionality)
 
 ## 🚀 Installation
 
@@ -195,8 +195,6 @@ Sends a message to the AI and receives a response.
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
-
-- **Hugging Face** for providing AI model access
 - **OpenAI** for the Python client library
 - **FastAPI** for the excellent web framework
 - **React** for the powerful frontend library
