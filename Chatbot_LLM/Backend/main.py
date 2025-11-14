@@ -4,6 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import google.generativeai as genai
 from dotenv import load_dotenv
+import re
+from difflib import SequenceMatcher
 
 load_dotenv()
 
@@ -24,6 +26,136 @@ model = genai.GenerativeModel('gemini-2.5-flash')
 
 class Message(BaseModel):
     message: str
+
+class CodeGenerationRequest(BaseModel):
+    query: str
+    language: str = "python"
+
+class CodeValidationRequest(BaseModel):
+    generated_code: str
+    reference_code: str
+    language: str = "python"
+
+def extract_code_block(text, language):
+    """Extract code from markdown code blocks"""
+    pattern = rf"```{language}\n(.*?)\n```"
+    match = re.search(pattern, text, re.DOTALL)
+    if match:
+        return match.group(1)
+    return text
+
+def calculate_codebleu(generated_code, reference_code, language):
+    """
+    Calculate CodeBLEU-like score between generated and reference code.
+    Uses token matching and structural similarity.
+    Score range: 0.0 to 1.0
+    """
+    try:
+        # Tokenize both codes
+        gen_tokens = re.findall(r'\b\w+\b|[^\w\s]', generated_code)
+        ref_tokens = re.findall(r'\b\w+\b|[^\w\s]', reference_code)
+        
+        if not ref_tokens:
+            return 0.0
+        
+        # Calculate token-level similarity
+        gen_set = set(gen_tokens)
+        ref_set = set(ref_tokens)
+        token_overlap = len(gen_set & ref_set) / len(ref_set) if ref_set else 0
+        
+        # Calculate sequence similarity (structure)
+        sequence_matcher = SequenceMatcher(None, generated_code, reference_code)
+        sequence_ratio = sequence_matcher.ratio()
+        
+        # Calculate line-level similarity
+        gen_lines = [line.strip() for line in generated_code.split('\n') if line.strip()]
+        ref_lines = [line.strip() for line in reference_code.split('\n') if line.strip()]
+        
+        matching_lines = sum(1 for line in gen_lines if line in ref_lines)
+        line_ratio = matching_lines / len(ref_lines) if ref_lines else 0
+        
+        # Weighted combination (CodeBLEU-inspired)
+        # 40% token match, 40% sequence similarity, 20% line match
+        final_score = (0.4 * token_overlap + 0.4 * sequence_ratio + 0.2 * line_ratio)
+        
+        return min(1.0, max(0.0, final_score))
+    except Exception as e:
+        print(f"Error calculating score: {e}")
+        return 0.0
+
+@app.post("/generate-code")
+async def generate_code(request: CodeGenerationRequest):
+    """Generate code based on user query"""
+    try:
+        prompt = f"""You are an expert code generation AI. Generate ONLY the code without any explanations or comments.
+        
+User Request: {request.query}
+Language: {request.language}
+
+Requirements:
+1. Return ONLY the code - no explanations, no markdown, no text
+2. Make the code production-ready and well-structured
+3. Include proper error handling
+4. Use best practices for the {request.language} language
+5. If applicable, include comments only for complex logic
+
+Generate the code now:"""
+
+        response = model.generate_content(prompt)
+        generated_code = response.text.strip()
+        
+        # Clean up markdown if present
+        generated_code = extract_code_block(generated_code, request.language) or generated_code
+        
+        return {
+            "code": generated_code,
+            "language": request.language,
+            "status": "success"
+        }
+    except Exception as e:
+        return {
+            "code": "",
+            "language": request.language,
+            "status": "error",
+            "error": str(e)
+        }
+
+@app.post("/validate-code")
+async def validate_code(request: CodeValidationRequest):
+    """Validate generated code using CodeBLEU metric"""
+    try:
+        # Clean up code blocks if present
+        generated = extract_code_block(request.generated_code, request.language) or request.generated_code
+        reference = extract_code_block(request.reference_code, request.language) or request.reference_code
+        
+        # Calculate CodeBLEU score
+        score = calculate_codebleu(generated, reference, request.language)
+        
+        # Determine quality level
+        if score >= 0.85:
+            quality = "Excellent"
+        elif score >= 0.70:
+            quality = "Good"
+        elif score >= 0.50:
+            quality = "Fair"
+        else:
+            quality = "Poor"
+        
+        return {
+            "codebleu_score": round(score, 4),
+            "quality": quality,
+            "generated_code": generated,
+            "reference_code": reference,
+            "language": request.language,
+            "status": "success"
+        }
+    except Exception as e:
+        return {
+            "codebleu_score": 0.0,
+            "quality": "Error",
+            "status": "error",
+            "error": str(e)
+        }
 
 @app.post("/chat")
 async def chat(msg: Message):
