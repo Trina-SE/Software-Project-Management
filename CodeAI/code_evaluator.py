@@ -74,7 +74,7 @@ class CodeBLEUEvaluator:
         # Calculate DF (data-flow match score)
         df_score = self._dataflow_match_score(gen_normalized, ref_normalized, language)
         
-        # Calculate CodeBLEU (equal weights 0.25 each as per PDF)
+        # Calculate CodeBLEU
         codebleu_score = (
             0.25 * ng_score +
             0.25 * wng_score +
@@ -176,7 +176,7 @@ class CodeBLEUEvaluator:
             bp = (len(ref_tokens) / len(gen_tokens)) ** 0.5
         
         ng_score = geometric_mean * bp
-        return min(1.0, max(0.0, ng_score))
+        return min(1.0, max(0.0, ng_score)) 
     
     def _is_identifier(self, token: str, language: str) -> bool:
         """
@@ -283,7 +283,7 @@ class CodeBLEUEvaluator:
         df_score = overlap / len(ref_flow) if ref_flow else 0.0
         
         # If patterns are similar (same structure, different names), boost score
-        # The PDF shows that even when variable names differ, if flow is identical, DF = 1.0
+    
         if len(gen_flow) == len(ref_flow) and overlap >= len(ref_flow) * 0.8:
             return min(1.0, df_score * 1.2)  # Boost for high similarity
         
@@ -346,8 +346,6 @@ class CodeBLEUEvaluator:
         """
         Calculate AST (Abstract Syntax Tree) match score.
         Compares the parsed tree structures and node types.
-        
-        As per PDF: AST matching compares the parsed tree shapes and node types.
         If structure is identical (only identifier names differ), score should be high.
         """
         try:
@@ -503,4 +501,3 @@ Formula: CodeBLEU = 0.25 × NG + 0.25 × WNG + 0.25 × AST + 0.25 × DF
 Threshold: Code is considered correct if CodeBLEU >= 0.75
 """
         return report
-
